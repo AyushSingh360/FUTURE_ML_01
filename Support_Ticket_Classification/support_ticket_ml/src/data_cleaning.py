@@ -5,6 +5,15 @@ def load_data(filepath='../data/raw_tickets.csv'):
     try:
         df = pd.read_csv(filepath)
         print(f"Loaded dataset from {filepath} with shape {df.shape}")
+        
+        # Mapping Kaggle dataset columns to expected pipeline fields
+        rename_map = {
+            'Ticket Description': 'ticket_text',
+            'Ticket Type': 'category',
+            'Ticket Priority': 'priority',
+            'Ticket ID': 'ticket_id'
+        }
+        df.rename(columns=rename_map, inplace=True)
         return df
     except FileNotFoundError:
         print(f"Error: Could not find file at {filepath}")
